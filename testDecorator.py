@@ -3,9 +3,9 @@
 from datetime import datetime
 
 def log(func):
-	def decorator(*args,**kwargs):
+	def decorator(*args):
 		print('Function '+func.__name__+' has been called at '+datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-		return func(*args,**kwargs)
+		return func(*args)
 	return decorator
 
 
