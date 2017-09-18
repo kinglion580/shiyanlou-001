@@ -7,8 +7,8 @@ def hello(name):
 	print('hello'+name)
 
 def main():
-	#p=Process(target=hello,args=('shiyanlou',))
-	p=Process(hello('shiyanlou'))
+	p=Process(target=hello,args=('shiyanlou',))
+	#p=Process(hello('shiyanlou'))
 	p.start()
 	p.join()
 	print('parent process: {}'.format(os.getpid()))
