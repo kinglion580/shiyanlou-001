@@ -9,8 +9,8 @@ def f1():
 
 def f2():
 	data=conn2.recv()
-	data2=conn2.recv()
-	print(data,data2)
+	data=conn2.recv()
+	print(data)
 
 def main():
 	Process(target=f1).start()
