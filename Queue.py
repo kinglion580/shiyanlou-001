@@ -1,16 +1,16 @@
 from multiprocessing import Queue,Process
 
-queue=Queue()
+queue,queue2=Queue()
 
 def f1():
 	queue.put('Hello shiyanlou')
 	#conn1.send('Hello shiyanlou')
-	queue.put('Hello shiyanlou2')
-	queue.put('Hello shiyanlou3')
+	queue2.put('Hello shiyanlou2')
+	#queue.put('Hello shiyanlou3')
 
 def f2():
 	data=queue.get()
-	data2=queue.get()
+	data2=queue2.get()
 	#data=conn2.recv()
 	#data=conn2.recv()
 	print(data)
