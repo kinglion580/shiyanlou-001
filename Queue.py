@@ -10,7 +10,7 @@ def f1():
 
 def f2():
 	data=queue.get()
-	data=queue.get()
+	data2=queue.get()
 	#data=conn2.recv()
 	#data=conn2.recv()
 	print(data)
