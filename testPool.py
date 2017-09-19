@@ -1,7 +1,7 @@
 from multiprocessing import Pool
 
 def f(i):
-    print(i)
+    print(i,end='... ')
 
 def main():
       # ????? 3 ???????
