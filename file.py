@@ -8,7 +8,7 @@ print("args=",args,"index=",index,"a=",a)
 
 
 config={}
-with open('config.csv') as f:
+with open('config.cfg') as f:
 	for line in f.readlines():
 		key,value=line.strip().split('=')
 		config[key]=float(value)
