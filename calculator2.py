@@ -1,42 +1,56 @@
-#!/usr/bin/python
 import sys
+from collections import namedtuple
 
-def con(*salar):
-    wuxian = 0
-    shui = 0
-    try:
-        salar = int(*salar)
-    except Exception:
-        print('Parameter Error')
-        exit()
-    if salar < 3500:
-        print(0)
-        exit()
-    if salar > 3500 and salar <= 5000:
-        wuxian = salar*0.165
-        shui = (salar - wuxian - 3500)*0.03
-    if salar > 5000 and salar <= 8000:
-        wuxian = salar * 0.165
-        shui = (salar - wuxian - 3500) * 0.1 - 105
-    if salar > 8000 and salar <= 12500:
-        wuxian = salar * 0.165
-        shui = (salar - wuxian - 3500) * 0.2 - 555
-    if salar > 12500 and salar <= 38500:
-        wuxian = salar * 0.165
-        shui = (salar - wuxian - 3500) * 0.25 - 1005
-    if salar > 38500 and salar <= 58500:
-        wuxian = salar * 0.165
-        shui = (salar - wuxian - 3500) * 0.3 - 2755
-    if salar > 58500 and salar <= 83500:
-        wuxian = salar * 0.165
-        shui = (salar - wuxian - 3500) * 0.35 - 5505
-    if salar > 83500:
-        wuxian = salar * 0.165
-        shui = (salar - wuxian - 3500) * 0.45 - 13505
-    return '%.2f' % (salar - wuxian - shui)
+IncomeTaxQuickLookupItem = namedtuple(
+    'IncomeTaxQuickLookupItem',
+    ['start_point', 'tax_rate', 'quick_subtractor']
+)
 
-for i in range(1,len(sys.argv)):
-    gonghao = sys.argv[i].split(':')[0]
-    gongzi = con(sys.argv[i].split(':')[1])
-    print(gonghao + ':' + gongzi)
+INCOME_TAX_START_POINT = 3500
 
+INCOME_TAX_QUICK_LOOKUP_TABLE = [
+    IncomeTaxQuickLookupItem(80000, 0.45, 13505),
+    IncomeTaxQuickLookupItem(35000, 0.30, 2755),
+    IncomeTaxQuickLookupItem(55000, 0.35, 5505),
+    IncomeTaxQuickLookupItem(9000, 0.25, 1005),
+    IncomeTaxQuickLookupItem(4500, 0.2, 555),
+    IncomeTaxQuickLookupItem(1500, 0.1, 105),
+    IncomeTaxQuickLookupItem(0, 0.03, 0)
+]
+
+SOCIAL_INSURANCE_MONEY_RATE = {
+    'endowment_insurance': 0.08,
+    'medical_insurance': 0.02,
+    'unemployment_insurance': 0.005,
+    'employment_injury_insurance': 0,
+    'maternity_insurance': 0,
+    'public_accumulation_funds': 0.06
+}
+
+
+def calc_income_tax_and_remain(income):
+    social_insurance_money = income * sum(SOCIAL_INSURANCE_MONEY_RATE.values())
+    real_income = income - social_insurance_money
+    taxable_part = real_income - INCOME_TAX_START_POINT
+    if taxable_part <= 0:
+        return '0.00', '{:.2f}'.format(real_income)
+
+    for item in INCOME_TAX_QUICK_LOOKUP_TABLE:
+        if taxable_part > item.start_point:
+            tax = taxable_part * item.tax_rate - item.quick_subtractor
+            return '{:.2f}'.format(tax), '{:.2f}'.format(real_income - tax)
+
+
+def main():
+    for item in sys.argv[1:]:
+        employee_id, income_string = item.split(':')
+        try:
+            income = int(income_string)
+        except ValueError:
+            print("Parameter Error")
+        _, remain = calc_income_tax_and_remain(income)
+        print('{}:{}'.format(employee_id, remain))
+
+
+if __name__ == '__main__':
+    main()
