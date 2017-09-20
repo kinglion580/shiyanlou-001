@@ -1,36 +1,33 @@
-import sys
-#monthMoney=int(input("please input money"))
+def calc_income_tax(income):
+    taxable_part = income - 3500
+    if taxable_part <= 0:
+        return '0.00'
+    income_tax_quick_lookup_table = [
+        (80000, 0.45, 13505),
+        (35000, 0.30, 2755),
+        (55000, 0.35, 5505),
+        (9000, 0.25, 1005),
+        (4500, 0.2, 555),
+        (1500, 0.1, 105),
+        (0, 0.03, 0)
+    ]
+    for item in income_tax_quick_lookup_table:
+        if taxable_part > item[0]:
+            result = taxable_part * item[1] - item[2]
+            return print('{:.2f}'.format(result))
+
+
 def main():
-    if len(sys.argv)!=2:
+    import sys
+    if len(sys.argv) != 2:
         print("Parameter Error")
         exit()
     try:
-        ds=3500
-        monthMoney=int(sys.argv[1])
-        payable=monthMoney-ds
-        single=0
+        income = int(sys.argv[1])
     except ValueError:
         print("Parameter Error")
-    if payable<=0:
-        single=0
-    if payable<1500:
-        single=payable*0.03-0
-    elif payable>=1500 and payable<4500:
-        single=payable*0.1-105
-    elif payable>=4500 and payable<9000:
-        single=payable*0.2-555
-    elif payable>=9000 and payable<35000:
-        single=payable*0.25-1005
-    elif payable>=35000 and payable<55000:
-        single=payable*0.3-2002
-    elif payable>=55000 and payable<80000:
-        single=payable*0.35-5505
-    elif payable>=80000:
-        single=payable*0.45-13505
-    if single<0:
-        single=0
-    #print "%.2f" %single
-    print('{:.2f}'.format(single))
+        exit()
+    print(calc_income_tax(income))
 
-if __name__=='__main__':
+if __name__ == '__main__':
     main()
