@@ -1,3 +1,4 @@
+import sys
 from collections import namedtuple
 
 IncomeTaxQuickLookupItem = namedtuple(
@@ -26,26 +27,29 @@ SOCIAL_INSURANCE_MONEY_RATE = {
     'public_accumulation_funds': 0.06
 }
 
-def calc_income_tax(income):
-    taxable_part = income - INCOME_TAX_START_POINT
+
+def calc_income_tax_and_remain(income):
+    social_insurance_money = income * sum(SOCIAL_INSURANCE_MONEY_RATE.values())
+    real_income = income - social_insurance_money
+    taxable_part = real_income - INCOME_TAX_START_POINT
     if taxable_part <= 0:
-        return '0.00'
+        return '0.00', '{:.2f}'.format(real_income)
 
     for item in INCOME_TAX_QUICK_LOOKUP_TABLE:
         if taxable_part > item.start_point:
             tax = taxable_part * item.tax_rate - item.quick_subtractor
-            return '{:.2f}'.format(tax)
+            return '{:.2f}'.format(tax), '{:.2f}'.format(real_income - tax)
 
 
 def main():
-    import sys
-    if len(sys.argv) != 2:
-        print("Parameter Error")
-    try:
-        income = int(sys.argv[1])
-    except ValueError:
-        print("Parameter Error")
-    print(calc_income_tax(income))
+    for item in sys.argv[1:]:
+        employee_id, income_string = item.split(':')
+        try:
+            income = int(income_string)
+        except ValueError:
+            print("Parameter Error")
+        _, remain = calc_income_tax_and_remain(income)
+        print('{}:{}'.format(employee_id, remain))
 
 
 if __name__ == '__main__':
