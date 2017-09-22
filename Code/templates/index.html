@@ -1,33 +1,15 @@
-<h1>hello world</h1>
-{% extends "base.html" %}
-{% from 'macro.html' import course_item %}
-
-{% block header %}
-	<h1>header</h1>
-{% endblock %}
-
-{% block content %}
-	{{course_item(course)}}
-{% endblock %}
-
-<div>{{course_item(course)}}</div>
-<p>{{'='*20}}</p>
-<div>{{course_item(course,type="louplus")}}</div>
-
-{#
-{% set result=heavy_operation() %}
-<p>{{result}}</p>
-#}
-
-{% if course.is_private %}
-	<p> course{{course.name}} is private</p>
-	<p> course{{course.name}} is member course</p>
-{% else%}
-	<p> course {{course.name}} is normal course</p>
-{% endif %}
-
-{% for tag in course.tags %}
-	<span>{{tag}}</span>
-{% endfor %}
-
-		
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>HTML5 STUDY</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>daohangtiao</nav>
+    <div class="container">zhuti content</div>
+    <footer>
+        &copy:Copyright 2017 by<a href="http://www.shiyanlou.com/">shiyanlou</a>
+    </footer>
+</body>
+</html>
