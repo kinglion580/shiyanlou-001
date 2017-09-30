@@ -12,8 +12,8 @@ class LoginSpiderSpider(scrapy.Spider):
                 response,
                 formdata={
                     'csrf_token':csrf_token,
-                    'login':'1609019405@qq.com',
-                    'password':'033181995212ydp',
+                    'login':'****@qq.com',
+                    'password':'****',
                     },
                 callback=self.after_login
                 )
