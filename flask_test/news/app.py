@@ -1,6 +1,6 @@
 import os
 import json
-from flask import Flask,render_template
+from flask import Flask,render_template,abort
 
 app=Flask(__name__)
 
@@ -15,7 +15,13 @@ def index():
 
 @app.route('/files/<filename>')
 def file(filename):
-    return 'Hello {}'.format(filename)
+    path='../files/'+filename+'.json'
+    if not os.path.exists(path):
+        abort(404)
+    else:
+        with open(path) as f:
+            item=json.load(f)
+        return render_template('file.html',item_list=item)
 
 
 @app.errorhandler(404)
