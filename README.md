@@ -3,7 +3,10 @@
 
 ![](https://img.shields.io/badge/shiyanlou-testv0.1-brightgreen.svg)
 
-[![](https://img.shields.io/github/downloads/atom/atom/total.svg)](www.baidu.com)
+[![](https://img.shields.io/github/downloads/atom/atom/total.svg)](https://www.baidu.com)
+
+.. image:: https://img.shields.io/github/downloads/atom/atom/total.svg
+    :target: https://www.baidu.com
 
 1.newcourse：新课开发的任务
 
