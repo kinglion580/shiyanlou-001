@@ -1,0 +1,6 @@
+<title>index</title>
+<ul>
+    {% for file in files %}
+   <li><a href="{{ url_for('file',file_id=file.id) }}"target="_blank">{{file.title}}</a></li>
+   {% endfor %}
+</ul>
